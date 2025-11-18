@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 一起看 - 在线同步观影平台
 
-## Getting Started
+一个支持多人在线同步观看视频、实时聊天、语音通话和屏幕共享的 Web 应用。
 
-First, run the development server:
+## 功能特性
+
+- ✨ **同步观看视频**: 所有用户的视频播放进度自动同步
+- 💬 **实时聊天**: 房间内成员可以进行文字交流
+- 🎤 **语音通话**: 基于 WebRTC 的实时语音通话功能
+- 📺 **屏幕投屏**: 支持分享屏幕给其他观看者
+
+## 技术栈
+
+- **前端框架**: Next.js 16 + React 19 + TypeScript
+- **样式**: Tailwind CSS
+- **实时通信**: Socket.IO
+- **音视频通信**: WebRTC
+- **状态管理**: React Hooks
+
+## 快速开始
+
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 启动开发服务器
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+应用将在 http://localhost:3000 启动。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 使用说明
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 创建房间
 
-## Learn More
+1. 在首页输入你的用户名
+2. 点击"创建房间"
+3. 系统会自动生成一个房间号
+4. 将房间号分享给你的朋友
 
-To learn more about Next.js, take a look at the following resources:
+### 加入房间
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. 在首页输入你的用户名
+2. 切换到"加入房间"标签
+3. 输入朋友分享的房间号
+4. 点击"加入房间"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 播放视频
 
-## Deploy on Vercel
+1. 进入房间后，点击"更换视频"
+2. 输入视频 URL（支持 MP4 等格式）
+3. 点击确定开始播放
+4. 所有房间内的用户将同步观看
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 语音通话
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. 点击"开启语音"按钮
+2. 允许浏览器访问麦克风
+3. 可以使用"静音"和"关闭语音"控制音频
+
+### 屏幕投屏
+
+1. 点击"开始投屏"按钮
+2. 选择要共享的窗口或屏幕
+3. 其他用户可以看到你的屏幕
+4. 点击"停止投屏"结束共享
+
+## 浏览器兼容性
+
+建议使用以下浏览器以获得最佳体验：
+
+- Chrome 90+
+- Edge 90+
+- Firefox 88+
+- Safari 14+
+
+## 注意事项
+
+- 语音通话和屏幕共享需要浏览器权限
+- 建议在 HTTPS 环境下使用（本地开发可以使用 HTTP）
+- 视频 URL 需要是公开可访问的直链
+
+## 项目结构
+
+```
+watch_together/
+├── app/                    # Next.js App Router
+│   ├── page.tsx           # 首页（创建/加入房间）
+│   └── room/[id]/         # 房间页面
+│       └── page.tsx
+├── components/            # React 组件
+│   ├── VideoPlayer.tsx   # 视频播放器
+│   ├── ChatPanel.tsx     # 聊天面板
+│   ├── VoiceCall.tsx     # 语音通话
+│   └── ScreenShare.tsx   # 屏幕共享
+├── lib/                   # 工具函数
+│   └── socket.ts         # Socket.IO 客户端
+└── server.js             # Socket.IO 服务器
+```
+
+## 开发说明
+
+本项目使用 Socket.IO 进行实时通信，使用 WebRTC 进行音视频传输。
+
+### 服务器端
+
+- `server.js` 处理 Socket.IO 连接和房间管理
+- 支持视频同步、聊天消息、WebRTC 信令等功能
+
+### 客户端
+
+- 使用 React Hooks 管理状态
+- 通过 Socket.IO 客户端与服务器通信
+- 使用 WebRTC API 实现音视频功能
+
+## License
+
+MIT
